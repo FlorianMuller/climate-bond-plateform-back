@@ -1,8 +1,12 @@
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// Middleware
+app.use(morgan('dev'));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/', (req, res) => res.send('Hello World!'));
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
