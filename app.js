@@ -20,25 +20,22 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
-var dbURI = 'mongodb://localhost/ClimateBond'
 
-mongoose.connect(dbURI)
+// Database
+const URL_DB = 'mongodb+srv://toto:toto@climatebound-dejph.gcp.mongodb.net/test?retryWrites=true&w=majority';
+mongoose.connect(URL_DB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
-mongoose.set('useCreateIndex', true)
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open to ' + dbURI)
+  console.log('Mongoose default succesful')
 })
-
 mongoose.connection.on('error', function (err) {
   console.log('Mongoose default connection error: ' + err)
 })
-
 mongoose.connection.on('disconnected', function () {
   console.log('Mongoose default connection disconnected')
 })
-
 // mongoose.set('debug', true)
 
 process.on('SIGINT', function () {
@@ -47,6 +44,8 @@ process.on('SIGINT', function () {
     process.exit(0)
   })
 })
+
+
 // Middleware
 app.use(morgan('dev'));
 app.use(helmet());
