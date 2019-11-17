@@ -4,6 +4,7 @@ import session from 'express-session'
 import express from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
+import cors from 'cors'
 import passport from 'passport'
 import { authenticate } from './src/account/passport'
 import bodyParser from 'body-parser'
@@ -49,6 +50,10 @@ process.on('SIGINT', function () {
 // Middleware
 app.use(morgan('dev'));
 app.use(helmet());
+// Allow request from React dev server
+app.use(cors({
+  domain: 'http://localhost:3000'
+}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
